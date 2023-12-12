@@ -14,6 +14,7 @@
 		A31A3C792B28425E00727761 /* dice_pokerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C782B28425E00727761 /* dice_pokerTests.swift */; };
 		A31A3C832B28425E00727761 /* dice_pokerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C822B28425E00727761 /* dice_pokerUITests.swift */; };
 		A31A3C852B28425E00727761 /* dice_pokerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C842B28425E00727761 /* dice_pokerUITestsLaunchTests.swift */; };
+		A31A3C942B28466400727761 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = A31A3C932B28466400727761 /* .gitkeep */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		A31A3C7E2B28425E00727761 /* dice pokerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "dice pokerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31A3C822B28425E00727761 /* dice_pokerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dice_pokerUITests.swift; sourceTree = "<group>"; };
 		A31A3C842B28425E00727761 /* dice_pokerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dice_pokerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A31A3C932B28466400727761 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		A31A3C662B28425A00727761 /* dice poker */ = {
 			isa = PBXGroup;
 			children = (
+				A31A3C922B28460E00727761 /* views */,
 				A31A3C672B28425A00727761 /* dice_pokerApp.swift */,
 				A31A3C692B28425A00727761 /* ContentView.swift */,
 				A31A3C6B2B28425D00727761 /* Assets.xcassets */,
@@ -125,6 +128,14 @@
 				A31A3C842B28425E00727761 /* dice_pokerUITestsLaunchTests.swift */,
 			);
 			path = "dice pokerUITests";
+			sourceTree = "<group>";
+		};
+		A31A3C922B28460E00727761 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				A31A3C932B28466400727761 /* .gitkeep */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A31A3C942B28466400727761 /* .gitkeep in Resources */,
 				A31A3C6F2B28425D00727761 /* Preview Assets.xcassets in Resources */,
 				A31A3C6C2B28425D00727761 /* Assets.xcassets in Resources */,
 			);
