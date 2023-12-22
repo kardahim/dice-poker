@@ -13,7 +13,6 @@
 		2D165A872B317DE20053BF1C /* DiceGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D165A862B317DE20053BF1C /* DiceGameModel.swift */; };
 		2D165A892B317E740053BF1C /* DiceGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D165A882B317E740053BF1C /* DiceGameViewModel.swift */; };
 		2D165A8B2B317FD60053BF1C /* DiceGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D165A8A2B317FD60053BF1C /* DiceGameView.swift */; };
-		2D165A8D2B31803F0053BF1C /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D165A8C2B31803F0053BF1C /* DiceView.swift */; };
 		2D32FD652B35241800CCAE85 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 2D32FD642B35241800CCAE85 /* Views */; };
 		A31A3C682B28425A00727761 /* dice_pokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C672B28425A00727761 /* dice_pokerApp.swift */; };
 		A31A3C6C2B28425D00727761 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A31A3C6B2B28425D00727761 /* Assets.xcassets */; };
@@ -47,7 +46,6 @@
 		2D165A862B317DE20053BF1C /* DiceGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGameModel.swift; sourceTree = "<group>"; };
 		2D165A882B317E740053BF1C /* DiceGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGameViewModel.swift; sourceTree = "<group>"; };
 		2D165A8A2B317FD60053BF1C /* DiceGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGameView.swift; sourceTree = "<group>"; };
-		2D165A8C2B31803F0053BF1C /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
 		2D32FD642B35241800CCAE85 /* Views */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Views; sourceTree = "<group>"; };
 		A31A3C642B28425A00727761 /* dice poker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dice poker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31A3C672B28425A00727761 /* dice_pokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dice_pokerApp.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				2D165A8A2B317FD60053BF1C /* DiceGameView.swift */,
-				2D165A8C2B31803F0053BF1C /* DiceView.swift */,
 				2D32FD642B35241800CCAE85 /* Views */,
 			);
 			path = views;
@@ -288,7 +285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D14F91F2B31891D00F14E91 /* Player.swift in Sources */,
-				2D165A8D2B31803F0053BF1C /* DiceView.swift in Sources */,
 				2D165A832B317D5E0053BF1C /* Dice.swift in Sources */,
 				2D14F91D2B31858500F14E91 /* DiceCombination.swift in Sources */,
 				A31A3C682B28425A00727761 /* dice_pokerApp.swift in Sources */,
