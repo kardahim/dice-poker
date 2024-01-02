@@ -11,6 +11,7 @@ struct DiceGameModel {
     var currentPlayer: Player
     var round: Int = 0
     var isGameOver: Bool = false
+    var isRoundOver: Bool = false
     var roundResults: [Int] = []
     var gameWinner: Int = 0
     
@@ -28,6 +29,13 @@ struct DiceGameModel {
     mutating func rollDice() {
         currentPlayer.rollDice()
         currentPlayer.didMove()
+        
+        if currentPlayer.id == 1 {
+            player1 = currentPlayer
+        }
+        else if currentPlayer.id == 2 {
+            player2 = currentPlayer
+        }
     }
     
     mutating func finishPlayerTurn() {
@@ -40,12 +48,22 @@ struct DiceGameModel {
             player2 = currentPlayer
             player2DiceHistory.append(player2.dice)
             finishRound()
+            isRoundOver = true
         }
     }
-    
+        
     mutating func finishRound() {
         // Dodaj wynik do tablicy - który gracz wygrał rundę
         roundResults.append(determineRoundWinner())
+        
+        gameWinner = determineGameWinner()
+        if gameWinner != 0 {
+            finishGame()
+        }
+    }
+    
+    mutating func startNextRound() {
+        isRoundOver = false
         
         // Zwiększ numer rundy
         round += 1
@@ -56,11 +74,6 @@ struct DiceGameModel {
         player2.movesInRound = 0
         
         currentPlayer = player1
-
-        gameWinner = determineGameWinner()
-        if gameWinner != 0 {
-            finishGame()
-        }
     }
     
     func determineGameWinner() -> Int {                 // sprawdzic poprawnosc
@@ -92,9 +105,6 @@ struct DiceGameModel {
         } else if player2Combination.rawValue > player1Combination.rawValue {
             return 2
         }
-//        else if { // trzeba sprawdzić jeszcze liczby oczek w układzie w przypadku takiego samego układu np. para piatek > para dwójek
-//
-//        }
         
         else {
             // W przypadku remisu, sprawdzamy sumę oczek na kościach
@@ -161,11 +171,37 @@ struct DiceGameModel {
         func hasPoker() -> Bool {
             return sortedValues[0] == sortedValues[4]
         }
-
+        
+        func countOccurrences(of value: Int) -> Int {
+            return sortedValues.filter { $0 == value }.count
+        }
+        
         if hasPoker() {
             return .poker
         } else if hasFourOfAKind() {
-            return .fourOfAKind
+            var num = 0
+            for value in 1...6 {
+                if countOccurrences(of: value) == 4 {
+                    num = value
+                    break
+                }
+            }
+            switch(num) {
+            case 1:
+                return .fourOfAKind_One
+            case 2:
+                return .fourOfAKind_Two
+            case 3:
+                return .fourOfAKind_Three
+            case 4:
+                return .fourOfAKind_Four
+            case 5:
+                return .fourOfAKind_Five
+            case 6:
+                return .fourOfAKind_Six
+            default:
+                return .none
+            }
         } else if hasFullHouse() {
             return .fullHouse
         } else if hasLargeStraight() {
@@ -173,12 +209,97 @@ struct DiceGameModel {
         } else if hasSmallStraight() {
             return .smallStraight
         } else if hasThreeOfAKind() {
-            return .threeOfAKind
+            var num = 0
+            for value in 1...6 {
+                if countOccurrences(of: value) == 3 {
+                    num = value
+                    break
+                }
+            }
+            switch(num) {
+            case 1:
+                return .threeOfAKind_One
+            case 2:
+                return .threeOfAKind_Two
+            case 3:
+                return .threeOfAKind_Three
+            case 4:
+                return .threeOfAKind_Four
+            case 5:
+                return .threeOfAKind_Five
+            case 6:
+                return .threeOfAKind_Six
+            default:
+                return .none
+            }
         } else if hasTwoPairs() {
-            return .twoPairs
+            var pairs: [Int] = []
+
+                for value in 1...6 {
+                    if countOccurrences(of: value) >= 2 {
+                        pairs.append(value)
+                    }
+                }
+
+                switch (pairs[0], pairs[1]) {
+                case (1, 2):
+                    return .twoPairs_One_Two
+                case (1, 3):
+                    return .twoPairs_One_Three
+                case (1, 4):
+                    return .twoPairs_One_Four
+                case (1, 5):
+                    return .twoPairs_One_Five
+                case (1, 6):
+                    return .twoPairs_One_Six
+                case (2, 3):
+                    return .twoPairs_Two_Three
+                case (2, 4):
+                    return .twoPairs_Two_Four
+                case (2, 5):
+                    return .twoPairs_Two_Five
+                case (2, 6):
+                    return .twoPairs_Two_Six
+                case (3, 4):
+                    return .twoPairs_Three_Four
+                case (3, 5):
+                    return .twoPairs_Three_Five
+                case (3, 6):
+                    return .twoPairs_Three_Six
+                case (4, 5):
+                    return .twoPairs_Four_Five
+                case (4, 6):
+                    return .twoPairs_Four_Six
+                case (5, 6):
+                    return .twoPairs_Five_Six
+                default:
+                    return .none
+                }
         } else if sortedValues[0] == sortedValues[1] || sortedValues[1] == sortedValues[2] ||
                   sortedValues[2] == sortedValues[3] || sortedValues[3] == sortedValues[4] {
-            return .onePair
+            var num = 0
+            for value in 1...6 {
+                if countOccurrences(of: value) == 2 {
+                    num = value
+                    break
+                }
+            }
+            switch(num) {
+            case 1:
+                return .onePair_One
+            case 2:
+                return .onePair_Two
+            case 3:
+                return .onePair_Three
+            case 4:
+                return .onePair_Four
+            case 5:
+                return .onePair_Five
+            case 6:
+                return .onePair_Six
+            default:
+                return .none
+            }
         } else {
             return .none
         }

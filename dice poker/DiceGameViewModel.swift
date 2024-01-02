@@ -13,9 +13,9 @@ class DiceGameViewModel: ObservableObject {
 
     func rollDice() {
         model.rollDice()
-        if model.currentPlayer.movesInRound > 1 {
-            finishPlayerTurn()
-        }
+//        if model.currentPlayer.movesInRound > 1 {
+//            finishPlayerTurn()
+//        }
     }
 
     func chooseDice(index: Int) {
@@ -24,6 +24,14 @@ class DiceGameViewModel: ObservableObject {
 
     func finishPlayerTurn() {
         model.finishPlayerTurn()
+    }
+    
+    func finishRound() {
+        model.finishRound()
+    }
+    
+    func startNextRound() {
+        model.startNextRound()
     }
 
     func resetGame() {

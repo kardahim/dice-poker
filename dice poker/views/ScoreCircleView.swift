@@ -2,8 +2,6 @@
 //  ScoreCircleView.swift
 //  dice poker
 //
-//  Created by Kardahim on 27/12/2023.
-//
 
 import SwiftUI
 
