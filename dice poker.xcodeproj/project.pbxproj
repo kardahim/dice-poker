@@ -21,6 +21,7 @@
 		A31A3C792B28425E00727761 /* dice_pokerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C782B28425E00727761 /* dice_pokerTests.swift */; };
 		A31A3C832B28425E00727761 /* dice_pokerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C822B28425E00727761 /* dice_pokerUITests.swift */; };
 		A31A3C852B28425E00727761 /* dice_pokerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A3C842B28425E00727761 /* dice_pokerUITestsLaunchTests.swift */; };
+		A32038242B45C2AC008E1ADD /* RankingOfHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32038232B45C2AC008E1ADD /* RankingOfHands.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		A31A3C7E2B28425E00727761 /* dice pokerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "dice pokerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31A3C822B28425E00727761 /* dice_pokerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dice_pokerUITests.swift; sourceTree = "<group>"; };
 		A31A3C842B28425E00727761 /* dice_pokerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dice_pokerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A32038232B45C2AC008E1ADD /* RankingOfHands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingOfHands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				2D32FD6E2B3528A800CCAE85 /* DiceGameView.swift */,
 				2D32FD6F2B3528A800CCAE85 /* DiceView.swift */,
 				A30ECC502B3C38210066C789 /* ScoreCircleView.swift */,
+				A32038232B45C2AC008E1ADD /* RankingOfHands.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A32038242B45C2AC008E1ADD /* RankingOfHands.swift in Sources */,
 				2D14F91F2B31891D00F14E91 /* Player.swift in Sources */,
 				A30ECC512B3C38210066C789 /* ScoreCircleView.swift in Sources */,
 				2D32FD712B3528A800CCAE85 /* DiceView.swift in Sources */,

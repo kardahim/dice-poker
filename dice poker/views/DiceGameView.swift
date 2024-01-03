@@ -34,6 +34,7 @@ struct DiceGameView: View {
         }
     }
     
+    // MARK: Title with dice icons
     var topHeaderDisplay: some View {
         return HStack {
             Image("dice_5")
@@ -54,6 +55,7 @@ struct DiceGameView: View {
         .padding(.top, 1)
     }
     
+    // MARK: Players health
     var playerPointsDisplay: some View {
         let player1WonRounds = viewModel.model.roundResults.reduce(0) { $0 + ($1 == 1 ? 1: 0) }
         let player2WonRounds = viewModel.model.roundResults.reduce(0) { $0 + ($1 == 2 ? 1: 0) }
@@ -62,18 +64,47 @@ struct DiceGameView: View {
         
         return VStack{
             HStack {
-                Text("Player 1 ")
-                ScoreCircleView(percent: Int(percentPlayer1), isFirstPlayer: true)
-                    .frame(width: 30, height: 30)
+                // player 1
+                VStack {
+                    HStack {
+                        Text("Player 1 ")
+                        ScoreCircleView(percent: Int(percentPlayer1), isFirstPlayer: true)
+                            .frame(width: 30, height: 30)
+                    }
+                    HStack {
+                        ForEach(viewModel.model.player1.dice, id: \.self) { dice in
+                            Image("dice_\(dice.value)")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .background(Color.white)
+                        }
+                    }
+                }
                 Spacer()
-                ScoreCircleView(percent: Int(percentPlayer2), isFirstPlayer: false)
-                    .frame(width: 30, height: 30)
-                Text(" Player 2")
+                // player 2
+                VStack {
+                    HStack {
+                        ScoreCircleView(percent: Int(percentPlayer2), isFirstPlayer: false)
+                            .frame(width: 30, height: 30)
+                        Text(" Player 2")
+                    }
+                    HStack {
+                        ForEach(viewModel.model.player2.dice, id: \.self) { dice in
+                            Image("dice_\(dice.value)")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .background(Color.white)
+                        }
+                    }
+                }
             }
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 30)
+            
         }
     }
     
+    // MARK: Players hand
+    // TODO: to delete, we use only "for's" under health orb
     var currentRoundDiceResults: some View {
         return VStack {
             Text("Player dice")
@@ -102,6 +133,7 @@ struct DiceGameView: View {
             .padding(5)
     }
     
+    // MARK: Main game part	- roll, reroll, finish turn
     var gameDisplay: some View {
         return VStack{
             Text("Round \(viewModel.model.round + 1)")
@@ -164,7 +196,7 @@ struct DiceGameView: View {
                 
                 Spacer()
                 
-                currentRoundDiceResults
+//                currentRoundDiceResults
                 
 //                Spacer()
                 Button("Restart Game") {
@@ -181,6 +213,7 @@ struct DiceGameView: View {
         }
     }
     
+    // MARK: Round details
     var roundOverDisplay: some View {
         return VStack {
             Text("Round \(viewModel.model.round + 1)")
@@ -226,6 +259,7 @@ struct DiceGameView: View {
         }
     }
     
+    // MARK: Game details - with history
     var resultDisplay: some View {
         return VStack {
             Text("Results")
@@ -256,7 +290,8 @@ struct DiceGameView: View {
                                !diceHistory.isEmpty, diceHistory.indices.contains(roundIndex), !diceHistory[roundIndex].isEmpty,
                                combinationHistory.indices.contains(roundIndex) {
                                 
-                                let color = viewModel.model.roundResults[roundIndex] == playerIndex ? Color.green : Color.red
+                                // FIXME: color is wrong, check that round history is correct all round in player should be red or blue not mixed
+                                let color = viewModel.model.roundResults[roundIndex] == playerIndex ? Color.red : Color.blue
                                 
                                 HStack {
                                     Text("Round \(roundIndex + 1): ")
