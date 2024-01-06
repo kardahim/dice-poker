@@ -36,6 +36,7 @@ struct DiceGameView: View {
                     }
                 }
             }
+            .padding(.top, -42)
             .toolbar {
                 // hand's ranking
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -95,6 +96,9 @@ struct DiceGameView: View {
                                 .background(Color.white)
                         }
                     }
+                    Text("\(combinationLabel(for: DiceCombinationHelper.evaluateRoll(for: viewModel.model.player1.dice).rawValue))")
+                        .padding(1)
+                        .font(.system(size: 14))
                 }
                 Spacer()
                 // player 2
@@ -112,11 +116,15 @@ struct DiceGameView: View {
                                 .background(Color.white)
                         }
                     }
+                    Text("\(combinationLabel(for: DiceCombinationHelper.evaluateRoll(for: viewModel.model.player2.dice).rawValue))")
+                        .padding(1)
+                        .font(.system(size: 14))
                 }
             }
             .padding(.horizontal, 30)
             
         }
+        .padding(.top, 4)
     }
     
     // MARK: Players hand
@@ -149,7 +157,7 @@ struct DiceGameView: View {
 //            .padding(5)
 //    }
     
-    // MARK: Main game part	- roll, reroll, finish turn
+    // MARK: Main game part    - roll, reroll, finish turn
     var gameDisplay: some View {
         return VStack{
             Text("Round \(viewModel.model.round + 1)")
@@ -227,6 +235,7 @@ struct DiceGameView: View {
             }
             .padding()
         }
+        .padding(.top, 4)
     }
     
     // MARK: Round details
