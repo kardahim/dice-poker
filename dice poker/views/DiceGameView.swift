@@ -105,33 +105,33 @@ struct DiceGameView: View {
     
     // MARK: Players hand
     // TODO: to delete, we use only "for's" under health orb
-    var currentRoundDiceResults: some View {
-        return VStack {
-            Text("Player dice")
-                .padding(2)
-            HStack{
-                Text("Player 1")
-                    .font(.headline)
-                ForEach(viewModel.model.player1.dice, id: \.self) { dice in
-                    Image("dice_\(dice.value)")
-                        .resizable()
-                        .frame(width: 26, height: 26)
-                        .background(Color.white)
-                }
-            }
-            HStack{
-                Text("Player 2")
-                    .font(.headline)
-                ForEach(viewModel.model.player2.dice, id: \.self) { dice in
-                    Image("dice_\(dice.value)")
-                        .resizable()
-                        .frame(width: 26, height: 26)
-                        .background(Color.white)
-                }
-            }
-        }
-            .padding(5)
-    }
+//    var currentRoundDiceResults: some View {
+//        return VStack {
+//            Text("Player dice")
+//                .padding(2)
+//            HStack{
+//                Text("Player 1")
+//                    .font(.headline)
+//                ForEach(viewModel.model.player1.dice, id: \.self) { dice in
+//                    Image("dice_\(dice.value)")
+//                        .resizable()
+//                        .frame(width: 26, height: 26)
+//                        .background(Color.white)
+//                }
+//            }
+//            HStack{
+//                Text("Player 2")
+//                    .font(.headline)
+//                ForEach(viewModel.model.player2.dice, id: \.self) { dice in
+//                    Image("dice_\(dice.value)")
+//                        .resizable()
+//                        .frame(width: 26, height: 26)
+//                        .background(Color.white)
+//                }
+//            }
+//        }
+//            .padding(5)
+//    }
     
     // MARK: Main game part	- roll, reroll, finish turn
     var gameDisplay: some View {
