@@ -11,25 +11,41 @@ struct DiceGameView: View {
     @State var showDetailedResults: Bool = false
 
     var body: some View {
-        topHeaderDisplay
-        
-        Divider()
-            .frame(maxWidth: .infinity, maxHeight: 1)
-            .background(Color.gray)
- 
-        playerPointsDisplay
-            
-        if !viewModel.model.isGameOver {
-            if !viewModel.model.isRoundOver {
-                gameDisplay
+        NavigationView {
+            // game
+            VStack {
+                topHeaderDisplay
+                
+                Divider()
+                    .frame(maxWidth: .infinity, maxHeight: 1)
+                    .background(Color.gray)
+                
+                playerPointsDisplay
+                
+                if !viewModel.model.isGameOver {
+                    if !viewModel.model.isRoundOver {
+                        gameDisplay
+                    }
+                    else {
+                        roundOverDisplay
+                    }
+                }
+                else {
+                    ScrollView {
+                        resultDisplay
+                    }
+                }
             }
-            else {
-                roundOverDisplay
-            }
-        }
-        else {
-            ScrollView {
-                resultDisplay
+            .toolbar {
+                // hand's ranking
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: RankingOfHands()) {
+                        Image(systemName: "dice.fill")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
+                }
+
             }
         }
     }

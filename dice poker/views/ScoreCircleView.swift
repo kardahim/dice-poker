@@ -73,8 +73,10 @@ struct ScoreCircleView: View {
         }
         .aspectRatio(1, contentMode: .fit)
         .onAppear {
-            withAnimation(Animation.linear(duration: 2).repeatForever(autoreverses: false)) {
-                self.waveOffset = Angle(degrees: 360)
+            DispatchQueue.main.async {
+                withAnimation(Animation.linear(duration: 2).repeatForever(autoreverses: false)) {
+                    self.waveOffset = Angle(degrees: 360)
+                }
             }
         }
     }
