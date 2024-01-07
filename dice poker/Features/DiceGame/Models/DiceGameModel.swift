@@ -53,7 +53,6 @@ struct DiceGameModel {
     }
         
     mutating func finishRound() {
-        // Dodaj wynik do tablicy - który gracz wygrał rundę
         roundResults.append(determineRoundWinner())
         
         gameWinner = determineGameWinner()
@@ -64,8 +63,6 @@ struct DiceGameModel {
     
     mutating func startNextRound() {
         isRoundOver = false
-        
-        // Zwiększ numer rundy
         round += 1
         
         player1.dice = Array(repeating: Dice(value: 0, isChosen: false), count: 5)
@@ -76,15 +73,13 @@ struct DiceGameModel {
         currentPlayer = player1
     }
     
-    func determineGameWinner() -> Int {                 // sprawdzic poprawnosc
+    func determineGameWinner() -> Int {
         var playerWinsCount: [Int: Int] = [:]
 
-        // Zlicz wygrane dla każdego gracza
         for roundWinner in roundResults {
             playerWinsCount[roundWinner, default: 0] += 1
         }
 
-        // Sprawdź czy któryś z graczy wygrał dwie rundy
         for (player, wins) in playerWinsCount {
             if wins >= 2 {
                 return player
@@ -94,35 +89,14 @@ struct DiceGameModel {
     }
 
     mutating func determineRoundWinner() -> Int {
-        let player1Combination = DiceCombinationHelper.evaluateRoll(for: player1.dice)
-        let player2Combination = DiceCombinationHelper.evaluateRoll(for: player2.dice)
+        let player1Combination = DiceCombinationHelper.determineDiceSetCombination(for: player1.dice)
+        let player2Combination = DiceCombinationHelper.determineDiceSetCombination(for: player2.dice)
         
         player1CombinationHistory.append(player1Combination)
         player2CombinationHistory.append(player2Combination)
 
-        if player1Combination.rawValue > player2Combination.rawValue {
-            return 1
-        } else if player2Combination.rawValue > player1Combination.rawValue {
-            return 2
-        }
-        
-        else {
-            // W przypadku remisu, sprawdzamy sumę oczek na kościach
-            let player1Total = player1.dice.reduce(0) { $0 + $1.value }
-            let player2Total = player2.dice.reduce(0) { $0 + $1.value }
-
-            if player1Total > player2Total {
-                return 1
-            } else if player2Total > player1Total {
-                return 2
-            } else {
-                // Jeśli nadal remis, zwracamy 0
-                return 0
-            }
-        }
+        return DiceCombinationHelper.determineWinningDiceSet(diceSet1: player1.dice, diceSet2: player2.dice)
     }
-    
-    
     
     mutating func finishGame() {
         self.isGameOver = true

@@ -18,15 +18,53 @@ struct RankingOfHands: View {
                     footer:
                         Text("In the case of the same dice arrangement for both players at the same time, higher dice values win")
                 ) {
-                    Text("None - 5 mismatched dice without any sequence")
-                    Text("One Pair - 1 pair have the same value")
-                    Text("Two Pairs - 2 pairs of dice, each have the same value")
-                    Text("Three of a Kind - 3 dice have the same value")
-                    Text("Small Straight - dice values from 1 through 5 inclusive")
-                    Text("Large Straight - dice values from 2 through 6 inclusive")
-                    Text("Full House - pair and three of a kind ")
-                    Text("Four of a Kind - 4 dice have the same value")
-                    Text("Five of a Kind - 5 dice have the same value")
+                    Text("None")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 5 mismatched dice without any sequence")
+                    Text("One Pair")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 1 ") +
+                        Text("Pair")
+                            .fontWeight(.bold) +
+                        Text(" have the same value")
+                    Text("Two Pairs")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 2 ") +
+                        Text("Pairs")
+                            .fontWeight(.bold) +
+                        Text(" of dice, each have the same value")
+                    Text("Three of a Kind")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 3 dice have the same value")
+                    Text("Small Straight")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - dice values from 1 through 5 inclusive")
+                    Text("Large Straight")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - dice values from 2 through 6 inclusive")
+                    Text("Full House")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - one ") +
+                        Text("Pair")
+                            .fontWeight(.bold) +
+                            Text(" and ") +
+                            Text("Three of a Kind")
+                                .fontWeight(.bold)
+                    Text("Four of a Kind")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 4 dice have the same value")
+                    Text("Five of a Kind")
+                        .font(.title3)
+                        .fontWeight(.bold) +
+                        Text(" - 5 dice have the same value")
                 }
             }
         }

@@ -5,31 +5,14 @@
 
 import Foundation
 
-//enum DiceCombination: Int {
-//    case none = 0
-//    case onePair = 1
-//    case twoPairs = 2
-//    case threeOfAKind = 3
-//    case smallStraight = 4
-//    case largeStraight = 5
-//    case fullHouse = 6
-//    case fourOfAKind = 7
-//    case poker = 8
-//
-//
-//
-//}
-
 enum DiceCombination: Int {
     case none = 0
-    
     case onePair_One = 1
     case onePair_Two = 2
     case onePair_Three = 3
     case onePair_Four = 4
     case onePair_Five = 5
     case onePair_Six = 6
-    
     case twoPairs_One_Two = 7
     case twoPairs_One_Three = 8
     case twoPairs_One_Four = 9
@@ -45,17 +28,14 @@ enum DiceCombination: Int {
     case twoPairs_Four_Five = 19
     case twoPairs_Four_Six = 20
     case twoPairs_Five_Six = 21
-    
     case threeOfAKind_One = 22
     case threeOfAKind_Two = 23
     case threeOfAKind_Three = 24
     case threeOfAKind_Four = 25
     case threeOfAKind_Five = 26
     case threeOfAKind_Six = 27
-    
     case smallStraight = 28
     case largeStraight = 29
-
     case fullHouse_Two_One = 30
     case fullHouse_Three_One = 31
     case fullHouse_Four_One = 32
@@ -86,14 +66,12 @@ enum DiceCombination: Int {
     case fullHouse_Three_Six = 57
     case fullHouse_Four_Six = 58
     case fullHouse_Five_Six = 59
-    
     case fourOfAKind_One = 60
     case fourOfAKind_Two = 61
     case fourOfAKind_Three = 62
     case fourOfAKind_Four = 63
     case fourOfAKind_Five = 64
     case fourOfAKind_Six = 65
-    
     case fiveOfAKind_One = 66
     case fiveOfAKind_Two = 67
     case fiveOfAKind_Three = 68
@@ -253,6 +231,4 @@ func combinationLabel(for value: Int) -> String {
         case .fiveOfAKind_Six:
             return "Five of a Kind (6)"
     }
-    
 }
-

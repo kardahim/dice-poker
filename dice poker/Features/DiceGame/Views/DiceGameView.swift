@@ -9,356 +9,76 @@ struct DiceGameView: View {
     @ObservedObject var viewModel: DiceGameViewModel
     @State var rollButtonText: String = "Accept all dice"
     @State var showDetailedResults: Bool = false
+    @State private var percentPlayer1: Int = 100
+    @State private var percentPlayer2: Int = 100
 
     var body: some View {
-        NavigationView {
-            // game
-            VStack {
-                topHeaderDisplay
-                
-                Divider()
-                    .frame(maxWidth: .infinity, maxHeight: 1)
-                    .background(Color.gray)
-                
-                playerPointsDisplay
-                
-                if !viewModel.model.isGameOver {
-                    if !viewModel.model.isRoundOver {
-                        gameDisplay
+        VStack {
+            NavigationView {
+                VStack {
+                    // MARK: Title with dice icons
+                    GameHeaderView()
+                    
+                    Divider()
+                        .frame(maxWidth: .infinity, maxHeight: 1)
+                        .background(Color.gray)
+                        .padding(.top, -8)
+                    
+                    // MARK: Current players' `health` points indicators with their current dice sets and corresponding combination names
+                    PlayerInfoView(
+                        viewModel: viewModel,
+                        percentPlayer1: $percentPlayer1,
+                        percentPlayer2: $percentPlayer2
+                    )
+                    
+                    if !viewModel.model.isGameOver {
+                        if !viewModel.model.isRoundOver {
+                            // MARK: Main game part    - roll, reroll, finish turn
+                            GameDisplayView(
+                                viewModel: viewModel,
+                                rollButtonText: $rollButtonText,
+                                showDetailedResults: $showDetailedResults,
+                                percentPlayer1: $percentPlayer1,
+                                percentPlayer2: $percentPlayer2
+                            )
+                        }
+                        else {
+                            // MARK: Results for current (and previous) round
+                            RoundResultsView(
+                                viewModel: viewModel,
+                                rollButtonText: $rollButtonText,
+                                showDetailedResults: $showDetailedResults
+                            )
+                        }
                     }
                     else {
-                        roundOverDisplay
+                        ScrollView {
+                            // MARK: Finished game details - with history
+                            GameResultsView(
+                                viewModel: viewModel,
+                                rollButtonText: $rollButtonText,
+                                showDetailedResults: $showDetailedResults
+                            )
+                        }
                     }
                 }
-                else {
-                    ScrollView {
-                        resultDisplay
-                    }
-                }
-            }
-            .padding(.top, -42)
-            .toolbar {
-                // hand's ranking
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: RankingOfHands()) {
-                        Image(systemName: "dice.fill")
-                            .resizable()
-                            .frame(width: 18, height: 18)
-                    }
-                }
-
-            }
-        }
-    }
-    
-    // MARK: Title with dice icons
-    var topHeaderDisplay: some View {
-        return HStack {
-            Image("dice_5")
-                .resizable()
-                .frame(width: 36, height: 36)
-                .background(Color.blue)
-                .cornerRadius(4)
-            
-            Text("Dice Game")
-                .font(.title)
-            
-            Image("dice_4")
-                .resizable()
-                .frame(width: 36, height: 36)
-                .background(Color.red)
-                .cornerRadius(4)
-        }
-        .padding(.top, 1)
-    }
-    
-    // MARK: Players health
-    var playerPointsDisplay: some View {
-        let player1WonRounds = viewModel.model.roundResults.reduce(0) { $0 + ($1 == 1 ? 1: 0) }
-        let player2WonRounds = viewModel.model.roundResults.reduce(0) { $0 + ($1 == 2 ? 1: 0) }
-        let percentPlayer2 = 100 - (player1WonRounds * 50)
-        let percentPlayer1 = 100 - (player2WonRounds * 50)
-        
-        return VStack{
-            HStack {
-                // player 1
-                VStack {
-                    HStack {
-                        Text("Player 1 ")
-                        ScoreCircleView(percent: Int(percentPlayer1), isFirstPlayer: true)
-                            .frame(width: 30, height: 30)
-                    }
-                    HStack {
-                        ForEach(viewModel.model.player1.dice, id: \.self) { dice in
-                            Image("dice_\(dice.value)")
+                .padding(.top, -38)
+                .toolbar {
+                    // hand's ranking
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: RankingOfHands()) {
+                            Image(systemName: "dice.fill")
                                 .resizable()
-                                .frame(width: 20, height: 20)
-                                .background(Color.white)
-                        }
-                    }
-                    Text("\(combinationLabel(for: DiceCombinationHelper.evaluateRoll(for: viewModel.model.player1.dice).rawValue))")
-                        .padding(1)
-                        .font(.system(size: 14))
-                }
-                Spacer()
-                // player 2
-                VStack {
-                    HStack {
-                        ScoreCircleView(percent: Int(percentPlayer2), isFirstPlayer: false)
-                            .frame(width: 30, height: 30)
-                        Text(" Player 2")
-                    }
-                    HStack {
-                        ForEach(viewModel.model.player2.dice, id: \.self) { dice in
-                            Image("dice_\(dice.value)")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .background(Color.white)
-                        }
-                    }
-                    Text("\(combinationLabel(for: DiceCombinationHelper.evaluateRoll(for: viewModel.model.player2.dice).rawValue))")
-                        .padding(1)
-                        .font(.system(size: 14))
-                }
-            }
-            .padding(.horizontal, 30)
-            
-        }
-        .padding(.top, 4)
-    }
-    
-    // MARK: Players hand
-    // TODO: to delete, we use only "for's" under health orb
-//    var currentRoundDiceResults: some View {
-//        return VStack {
-//            Text("Player dice")
-//                .padding(2)
-//            HStack{
-//                Text("Player 1")
-//                    .font(.headline)
-//                ForEach(viewModel.model.player1.dice, id: \.self) { dice in
-//                    Image("dice_\(dice.value)")
-//                        .resizable()
-//                        .frame(width: 26, height: 26)
-//                        .background(Color.white)
-//                }
-//            }
-//            HStack{
-//                Text("Player 2")
-//                    .font(.headline)
-//                ForEach(viewModel.model.player2.dice, id: \.self) { dice in
-//                    Image("dice_\(dice.value)")
-//                        .resizable()
-//                        .frame(width: 26, height: 26)
-//                        .background(Color.white)
-//                }
-//            }
-//        }
-//            .padding(5)
-//    }
-    
-    // MARK: Main game part    - roll, reroll, finish turn
-    var gameDisplay: some View {
-        return VStack{
-            Text("Round \(viewModel.model.round + 1)")
-                .font(.title2)
-                .padding(5)
-            VStack {
-                Text("Player \(viewModel.model.currentPlayer.id)'s Turn")
-                    .font(.title3)
-                    .padding()
-
-                HStack {
-                    ForEach(viewModel.model.currentPlayer.dice.indices, id: \.self) { index in
-                        DiceView(dice: viewModel.model.currentPlayer.dice[index])
-                            .padding(4)
-                            .onTapGesture {
-                                if viewModel.model.currentPlayer.movesInRound == 1 {
-                                    viewModel.chooseDice(index: index)
-                                    if viewModel.model.currentPlayer.dice.contains(where: { $0.isChosen }) {
-                                        rollButtonText = "Roll chosen again"
-                                    }
-                                   else {
-                                       rollButtonText = "Accept all dice"
-                                    }
-                                }
-                            }
-                    }
-                }
-                    .padding(.bottom, 10)
-
-                if viewModel.model.currentPlayer.movesInRound > 0 {
-                    Text("Choose dice for second roll or confirm current set")
-                        .padding(2)
-                        .font(.caption)
-                }
-                
-                HStack {
-                    Button(viewModel.model.currentPlayer.movesInRound < 1 ? "Roll dice" : rollButtonText) {
-                        viewModel.rollDice()
-                        rollButtonText = "Confirm dice set"
-                    }
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .disabled(viewModel.model.currentPlayer.movesInRound > 1 ? true : false)
-                        .blur(radius: viewModel.model.currentPlayer.movesInRound > 1 ? 1.0 : 0)
-
-                    if viewModel.model.currentPlayer.movesInRound > 0 {
-                        Button("Finish turn") {
-                            viewModel.finishPlayerTurn()
-                        }
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .disabled(viewModel.model.currentPlayer.movesInRound < 2 ? true : false)
-                            .blur(radius: viewModel.model.currentPlayer.movesInRound < 2 ? 1.0 : 0)
-                    }
-                }
-                
-                Spacer()
-                
-//                currentRoundDiceResults
-                
-//                Spacer()
-                Button("Restart Game") {
-                    viewModel.resetGame()
-//                    rollButtonText = "Accept all dice"
-                }
-                .padding()
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                
-            }
-            .padding()
-        }
-        .padding(.top, 4)
-    }
-    
-    // MARK: Round details
-    var roundOverDisplay: some View {
-        return VStack {
-            Text("Round \(viewModel.model.round + 1)")
-                .font(.title2)
-                .padding(5)
-            
-            if viewModel.model.roundResults.count > 0 {
-                Text("Current results:")
-                    .padding(5)
-                ForEach(0..<viewModel.model.roundResults.count, id: \.self) { roundIndex in
-                    let roundWinner = viewModel.model.roundResults[roundIndex]
-                    if roundWinner != 0 {
-                        Text("Round \(roundIndex + 1) winner: Player \(roundWinner)")
-                            .padding(2)
-                    }
-                    else {
-                        Text("Round \(roundIndex + 1) winner: DRAW!")
-                            .padding(2)
-                    }
-                }
-            }
-            
-//            Spacer()
-            
-            Button("Next round") {
-                viewModel.startNextRound()
-            }
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-            
-            Spacer()
-            
-            Button("Restart Game") {
-                viewModel.resetGame()
-                rollButtonText = "Accept all dice"
-            }
-            .padding()
-            .background(Color.red)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-        }
-    }
-    
-    // MARK: Game details - with history
-    var resultDisplay: some View {
-        return VStack {
-            Text("Results")
-                .font(.title2)
-                .padding(5)
-            
-            Text("Game Winner: Player \(viewModel.model.gameWinner)")
-                .font(.title3)
-                .padding()
-            
-            Button(!showDetailedResults ? "Show detailed results" : "Hide detailed results") {
-                showDetailedResults.toggle()
-            }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            
-            if showDetailedResults {
-                VStack {
-                    ForEach(1...2, id: \.self) { playerIndex in
-                        Text("Player \(playerIndex)")
-                            .font(.headline)
+                                .frame(width: 18, height: 18)
+                        }.padding(.top, 30)
                         
-                        ForEach(0..<viewModel.model.player1DiceHistory.count, id: \.self) { roundIndex in
-                            if let diceHistory = playerIndex == 1 ? viewModel.model.player1DiceHistory : viewModel.model.player2DiceHistory,
-                               let combinationHistory = playerIndex == 1 ? viewModel.model.player1CombinationHistory : viewModel.model.player2CombinationHistory,
-                               !diceHistory.isEmpty, diceHistory.indices.contains(roundIndex), !diceHistory[roundIndex].isEmpty,
-                               combinationHistory.indices.contains(roundIndex) {
-                                
-                                // FIXME: color is wrong, check that round history is correct all round in player should be red or blue not mixed
-                                let color = viewModel.model.roundResults[roundIndex] == playerIndex ? Color.red : Color.blue
-                                
-                                HStack {
-                                    Text("Round \(roundIndex + 1): ")
-                                        .font(.body)
-                                        .padding(5)
-                                    
-                                    ForEach(diceHistory[roundIndex], id: \.self) { dice in
-                                        Image("dice_\(dice.value)")
-                                            .resizable()
-                                            .frame(width: 26, height: 26)
-                                            .background(color)
-                                    }
-                                    Text("\(combinationLabel(for: combinationHistory[roundIndex].rawValue))")
-                                        .padding(1)
-                                    
-                                }
-    //                            Text("Combination: \(combinationLabel(for: combinationHistory[roundIndex].rawValue))")
-    //                                .padding(5)
-                                Text("")
-                            }
-                        }
                     }
                 }
-                .background(Color.yellow.opacity(0.5))
-                .cornerRadius(10)
             }
-            
-            Spacer()
-            Button("Play Again") {
-                viewModel.resetGame()
-            }
-            .padding()
-            .background(Color.red)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
+        .overlay(
+            RoundedRectangle(cornerRadius: 0)
+                .stroke(Color.gray.opacity(1), lineWidth: 1)
+            )
     }
-    
 }
-
-//struct DiceGameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DiceGameView()
-//    }
-//}

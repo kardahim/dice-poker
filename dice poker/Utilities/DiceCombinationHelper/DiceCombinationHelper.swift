@@ -7,7 +7,7 @@ import Foundation
 
 
 class DiceCombinationHelper {
-    static func evaluateRoll(for dice: [Dice]) -> DiceCombination {
+    static func determineDiceSetCombination(for dice: [Dice]) -> DiceCombination {
         let sortedValues = dice.map { $0.value }.sorted()
 
         func hasTwoPairs() -> Bool {
@@ -35,15 +35,26 @@ class DiceCombinationHelper {
             return false
         }
 
+//        func hasSmallStraight() -> Bool {
+//            let uniqueValues = Array(Set(sortedValues))
+//            return uniqueValues.count >= 5 && uniqueValues.max()! - uniqueValues.min()! == 4
+//        }
+//
+//        func hasLargeStraight() -> Bool {
+//            return Set(sortedValues).count == 5 && sortedValues.max()! - sortedValues.min()! == 4
+//        }
+
         func hasSmallStraight() -> Bool {
-            let uniqueValues = Array(Set(sortedValues))
-            return uniqueValues.count >= 5 && uniqueValues.max()! - uniqueValues.min()! == 4
+            let expectedValues: Set<Int> = [1, 2, 3, 4, 5]
+            return Set(sortedValues) == expectedValues
         }
 
         func hasLargeStraight() -> Bool {
-            return Set(sortedValues).count == 5 && sortedValues.max()! - sortedValues.min()! == 4
+            let expectedValues: Set<Int> = [2, 3, 4, 5, 6]
+            return Set(sortedValues) == expectedValues
         }
 
+        
         func hasFullHouse() -> Bool {
             return (sortedValues[0] == sortedValues[1] && sortedValues[2] == sortedValues[4]) ||
                    (sortedValues[0] == sortedValues[2] && sortedValues[3] == sortedValues[4])
@@ -117,7 +128,7 @@ class DiceCombinationHelper {
 
             for value in 1...6 {
                 let occurrences = countOccurrences(of: value)
-                if occurrences >= 2 {
+                if occurrences == 2 {
                     pairs.append(value)
                 }
                 if occurrences == 3 {
@@ -292,5 +303,33 @@ class DiceCombinationHelper {
         } else {
             return .none
         }
+    }
+    
+    static func determineWinningDiceSet(diceSet1: [Dice],diceSet2: [Dice]) -> Int {
+        let combination1 = DiceCombinationHelper.determineDiceSetCombination(for: diceSet1)
+        let combination2 = DiceCombinationHelper.determineDiceSetCombination(for: diceSet2)
+        
+        if combination1.rawValue > combination2.rawValue {
+            return 1
+        } else if combination2.rawValue > combination1.rawValue {
+            return 2
+        }
+        else {
+            // W przypadku remisu, sprawdzamy sumę oczek na kościach
+            let diceSet1Total = diceSet1.reduce(0) { $0 + $1.value }
+            let diceSet2Total = diceSet2.reduce(0) { $0 + $1.value }
+
+            if diceSet1Total > diceSet2Total {
+                return 1
+            } else if diceSet2Total > diceSet1Total {
+                return 2
+            } else {
+                return 0
+            }
+        }
+    }
+    
+    static func createDiceArray(from numbers: [Int]) -> [Dice] {
+        return numbers.map { Dice(value: $0, isChosen: false) }
     }
 }
