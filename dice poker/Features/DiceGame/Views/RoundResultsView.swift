@@ -36,10 +36,10 @@ struct RoundResultsView: View {
             Button("Next round") {
                 viewModel.startNextRound()
             }
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
             
             Spacer()
             
