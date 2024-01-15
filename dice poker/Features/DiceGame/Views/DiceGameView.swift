@@ -47,7 +47,9 @@ struct DiceGameView: View {
                             RoundResultsView(
                                 viewModel: viewModel,
                                 rollButtonText: $rollButtonText,
-                                showDetailedResults: $showDetailedResults
+                                showDetailedResults: $showDetailedResults,
+                                percentPlayer1: $percentPlayer1,
+                                percentPlayer2: $percentPlayer2
                             )
                         }
                     }
@@ -57,7 +59,9 @@ struct DiceGameView: View {
                             GameResultsView(
                                 viewModel: viewModel,
                                 rollButtonText: $rollButtonText,
-                                showDetailedResults: $showDetailedResults
+                                showDetailedResults: $showDetailedResults,
+                                percentPlayer1: $percentPlayer1,
+                                percentPlayer2: $percentPlayer2
                             )
                         }
                     }

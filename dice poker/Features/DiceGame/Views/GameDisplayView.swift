@@ -87,7 +87,8 @@ struct GameDisplayView: View {
                 Button("Restart Game") {
                     viewModel.resetGame()
                     showDetailedResults = false
-//                    rollButtonText = "Accept all dice"
+                    percentPlayer1 = 100
+                    percentPlayer2 = 100
                 }
                 .padding()
                 .background(Color.red)

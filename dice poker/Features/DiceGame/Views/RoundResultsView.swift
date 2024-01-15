@@ -9,6 +9,8 @@ struct RoundResultsView: View {
     @ObservedObject var viewModel: DiceGameViewModel
     @Binding var rollButtonText: String
     @Binding var showDetailedResults: Bool
+    @Binding var percentPlayer1: Int
+    @Binding var percentPlayer2: Int
     
     var body: some View {
         VStack {
@@ -47,12 +49,16 @@ struct RoundResultsView: View {
                 viewModel.resetGame()
                 rollButtonText = "Accept all dice"
                 showDetailedResults = false
+                percentPlayer1 = 100
+                percentPlayer2 = 100
             }
             .padding()
             .background(Color.red)
             .foregroundColor(.white)
             .cornerRadius(10)
+            .padding(.bottom, 16)
         }
         .padding(.top, 4)
+//        .padding(.bottom)
     }
 }

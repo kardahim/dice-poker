@@ -10,6 +10,8 @@ struct GameResultsView: View {
     @ObservedObject var viewModel: DiceGameViewModel
     @Binding var rollButtonText: String
     @Binding var showDetailedResults: Bool
+    @Binding var percentPlayer1: Int
+    @Binding var percentPlayer2: Int
     
     var body: some View {
         VStack {
@@ -27,6 +29,8 @@ struct GameResultsView: View {
                     viewModel.resetGame()
                     rollButtonText = "Accept all dice"
                     showDetailedResults = false
+                    percentPlayer1 = 100
+                    percentPlayer2 = 100
                 }
                 .padding()
                 .background(Color.red)
@@ -53,11 +57,11 @@ struct GameResultsView: View {
                             .padding(.top, playerIndex == 1 ? 20 : 0)
                         
                         ForEach(0..<viewModel.model.player1DiceHistory.count, id: \.self) { roundIndex in
-                            if let diceHistory = playerIndex == 1 ? viewModel.model.player1DiceHistory : viewModel.model.player2DiceHistory,
-                               let combinationHistory = playerIndex == 1 ? viewModel.model.player1CombinationHistory : viewModel.model.player2CombinationHistory,
-                               !diceHistory.isEmpty, diceHistory.indices.contains(roundIndex), !diceHistory[roundIndex].isEmpty,
-                               combinationHistory.indices.contains(roundIndex) {
-                                
+                            let diceHistory = playerIndex == 1 ? viewModel.model.player1DiceHistory : viewModel.model.player2DiceHistory
+                            let combinationHistory = playerIndex == 1 ? viewModel.model.player1CombinationHistory : viewModel.model.player2CombinationHistory
+                            
+                            if(!diceHistory.isEmpty && diceHistory.indices.contains(roundIndex) && !diceHistory[roundIndex].isEmpty &&
+                               combinationHistory.indices.contains(roundIndex)) {
                                 let color = viewModel.model.roundResults[roundIndex] == playerIndex ? Color.green : Color.red
                                 
                                 HStack {
