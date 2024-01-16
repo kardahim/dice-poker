@@ -35,15 +35,6 @@ class DiceCombinationHelper {
             return false
         }
 
-//        func hasSmallStraight() -> Bool {
-//            let uniqueValues = Array(Set(sortedValues))
-//            return uniqueValues.count >= 5 && uniqueValues.max()! - uniqueValues.min()! == 4
-//        }
-//
-//        func hasLargeStraight() -> Bool {
-//            return Set(sortedValues).count == 5 && sortedValues.max()! - sortedValues.min()! == 4
-//        }
-
         func hasSmallStraight() -> Bool {
             let expectedValues: Set<Int> = [1, 2, 3, 4, 5]
             return Set(sortedValues) == expectedValues
@@ -73,7 +64,6 @@ class DiceCombinationHelper {
         }
         
         if hasFiveOfAKind() {
-//            return .hasFiveOfAKind
             var num = 0
             for value in 1...6 {
                 if countOccurrences(of: value) == 5 {
@@ -122,7 +112,6 @@ class DiceCombinationHelper {
                 return .none
             }
         } else if hasFullHouse() {
-//            return .fullHouse
             var pairs: [Int] = []
             var threeOfAKind: Int?
 
@@ -203,7 +192,7 @@ class DiceCombinationHelper {
                 }
                 
             }
-            return .none // !
+            return .none
         } else if hasLargeStraight() {
             return .largeStraight
         } else if hasSmallStraight() {
@@ -315,7 +304,6 @@ class DiceCombinationHelper {
             return 2
         }
         else {
-            // W przypadku remisu, sprawdzamy sumę oczek na kościach
             let diceSet1Total = diceSet1.reduce(0) { $0 + $1.value }
             let diceSet2Total = diceSet2.reduce(0) { $0 + $1.value }
 

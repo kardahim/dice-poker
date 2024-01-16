@@ -16,9 +16,3 @@ struct DiceView: View {
             .animation(.easeInOut)
     }
 }
-
-//struct DiceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DiceView()
-//    }
-//}

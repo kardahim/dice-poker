@@ -92,7 +92,6 @@ struct GameResultsView: View {
                             }
                         }
                     }
-//                    .padding(.bottom, 16)
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -102,18 +101,6 @@ struct GameResultsView: View {
                 .cornerRadius(10)
                 .padding(.top, 16)
             }
-            
-//            Spacer()
-//            Button("Play Again") {
-//                viewModel.resetGame()
-//                rollButtonText = "Accept all dice"
-//                showDetailedResults = false
-//            }
-//            .padding()
-//            .background(Color.red)
-//            .foregroundColor(.white)
-//            .cornerRadius(10)
         }
-//        .padding(.top, -4)
     }
 }

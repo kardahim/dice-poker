@@ -10,13 +10,8 @@ struct ScoreCircleView: View {
     
     @State private var waveOffset = Angle(degrees: 0)
     
-    // 0 - 0/2 points
-    // 50 - 1/2 points
-    // 100 - 2/2 poin
     var percent: Int = 0
     
-    // first player - blue
-    // second player - red
     var isFirstPlayer = true
     let firstPlayer = Color(red: 52 / 255.0, green: 152 / 255.0, blue: 219 / 255.0)
     let secondPlayer = Color(red: 231 / 255.0, green: 76 / 255.0, blue: 60 / 255.0)

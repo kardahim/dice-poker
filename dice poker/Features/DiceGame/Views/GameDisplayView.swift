@@ -81,9 +81,6 @@ struct GameDisplayView: View {
                 
                 Spacer()
                 
-//                currentRoundDiceResults
-                
-//                Spacer()
                 Button("Restart Game") {
                     viewModel.resetGame()
                     showDetailedResults = false

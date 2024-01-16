@@ -59,6 +59,5 @@ struct RoundResultsView: View {
             .padding(.bottom, 16)
         }
         .padding(.top, 4)
-//        .padding(.bottom)
     }
 }
